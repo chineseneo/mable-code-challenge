@@ -1,20 +1,26 @@
-class Account {
-    constructor(public readonly accountNumber: string, private balance: number) {}
-    
-    debit(amount: number): void {
-      if (this.balance - amount < 0) {
-        throw new Error('Insufficient funds');
-      }
-      this.balance -= amount;
-    }
+export default class Account {
+  constructor(public readonly accountNumber: string, private balance: number) {}
   
-    credit(amount: number): void {
-      this.balance += amount;
+  debit(amount: number): void {
+    this.validateAmount(amount);
+    if (this.balance - amount < 0) {
+      throw new Error('Insufficient funds');
     }
-  
-    getBalance(): number {
-      return this.balance;
+    this.balance -= amount;
+  }
+
+  credit(amount: number): void {
+    this.validateAmount(amount);
+    this.balance += amount;
+  }
+
+  getBalance(): number {
+    return this.balance;
+  }
+
+  private validateAmount(amount: number): void {
+    if (amount <= 0) {
+      throw new Error('Amount must be greater than 0');
     }
   }
-  
-  export default Account;
+}

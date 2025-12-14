@@ -1,7 +1,7 @@
 import Account from "./account";
 import { Transaction } from "./transaction";
 
-export class Ledger {
+export default class Ledger {
   constructor(public readonly accounts: Account[]) {}
 
   processTransactions(transactions: Transaction[]): void {

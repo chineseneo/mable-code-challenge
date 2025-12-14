@@ -30,4 +30,14 @@ describe('Account', () => {
     const account = new Account(accountNumber, initialBalance);
     expect(() => account.debit(insufficientDebit)).toThrow(insufficientFundsError);
   });
+
+  it('should not debit an account if the amount is less than 0', () => {
+    const account = new Account(accountNumber, initialBalance);
+    expect(() => account.debit(0)).toThrow('Amount must be greater than 0');
+  });
+
+  it('should not credit an account if the amount is less than 0', () => {
+    const account = new Account(accountNumber, initialBalance);
+    expect(() => account.credit(0)).toThrow('Amount must be greater than 0');
+  });
 });
