@@ -41,7 +41,7 @@ Clean separation: CSV loading → Domain models → Business logic → Output
 - CSV files are well-formed
 - Both accounts must exist before transfer
 - No negative balances allowed
-- Transactions are atomic (all-or-nothing)
+- Each individual transaction is atomic: either both the debit and credit are applied, or neither is applied.
 
 ## Future Improvements
 
