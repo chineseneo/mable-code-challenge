@@ -25,7 +25,7 @@ export default class Ledger {
   }
 
   findAccountByNumber(accountNumber: string): Account | undefined {
-    return this.accounts.find(account => account.accountNumber === accountNumber);
+    return this.accounts.find(account => account.hasSameAccountNumber(accountNumber));
   }
 
   toString(): string {

@@ -1,25 +1,36 @@
 export default class Account {
-  constructor(public readonly accountNumber: string, private balance: number) {}
+  private readonly CENTS_PER_DOLLAR = 100;
+  private balanceInCents: number;
+
+  constructor(private readonly accountNumber: string, balance: number) {
+    this.balanceInCents = balance * this.CENTS_PER_DOLLAR;
+  }
   
   debit(amount: number): void {
-    this.validateAmount(amount);
-    if (this.balance - amount < 0) {
+    const amountInCents = amount * this.CENTS_PER_DOLLAR;
+    this.validateAmount(amountInCents);
+    if (this.balanceInCents - amountInCents < 0) {
       throw new Error('Insufficient funds');
     }
-    this.balance -= amount;
+    this.balanceInCents -= amountInCents;
   }
 
   credit(amount: number): void {
-    this.validateAmount(amount);
-    this.balance += amount;
+    const amountInCents = amount * this.CENTS_PER_DOLLAR;
+    this.validateAmount(amountInCents);
+    this.balanceInCents += amountInCents;
   }
 
   getBalance(): number {
-    return this.balance;
+    return this.balanceInCents / this.CENTS_PER_DOLLAR;
   }
 
   toString(): string {
-    return `${this.accountNumber},${this.balance}`;
+    return `${this.accountNumber},${this.getBalance()}`;
+  }
+
+  hasSameAccountNumber(accountNumber: string): boolean {
+    return this.accountNumber === accountNumber;
   }
 
   private validateAmount(amount: number): void {

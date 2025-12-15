@@ -10,7 +10,7 @@ const insufficientFundsError = 'Insufficient funds';
 describe('Account', () => {
   it('should create an account', () => {
     const account = new Account(accountNumber, initialBalance);
-    expect(account.accountNumber).toBe(accountNumber);
+    expect(account.hasSameAccountNumber(accountNumber)).toBe(true);
     expect(account.getBalance()).toBe(initialBalance);
   });
 
