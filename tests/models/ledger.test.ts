@@ -7,7 +7,6 @@ const accountNumber2 = '1234567891';
 const initialBalance1 = 1000;
 const initialBalance2 = 0;
 const transferAmount = 100;
-const ledgerAccountNotFoundError = 'Account not found';
 
 describe('Ledger', () => {
   it('should create a ledger', () => {
@@ -29,14 +28,21 @@ describe('Ledger', () => {
     const ledger = new Ledger([new Account(accountNumber1, initialBalance1)]);
     expect(() =>
       ledger.processTransactions([{ from: accountNumber2, to: accountNumber1, amount: transferAmount }])
-    ).toThrow(ledgerAccountNotFoundError);
+    ).toThrow('Account not found');
   });
 
   it('should not process a transaction if the to account is not found', () => {
     const ledger = new Ledger([new Account(accountNumber1, initialBalance1)]);
     expect(() =>
       ledger.processTransactions([{ from: accountNumber1, to: accountNumber2, amount: transferAmount }])
-    ).toThrow(ledgerAccountNotFoundError);
+    ).toThrow('Account not found');
+  });
+
+  it('should not process a transaction if the from and to accounts are the same', () => {
+    const ledger = new Ledger([new Account(accountNumber1, initialBalance1)]);
+    expect(() =>
+      ledger.processTransactions([{ from: accountNumber1, to: accountNumber1, amount: transferAmount }])
+    ).toThrow('From and to accounts cannot be the same');
   });
 
   it('should process multiple transactions', () => {

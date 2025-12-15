@@ -16,6 +16,9 @@ export default class Ledger {
     if (!fromAccount || !toAccount) {
       throw new Error('Account not found');
     }
+    if (fromAccount === toAccount) {
+      throw new Error('From and to accounts cannot be the same');
+    }
     fromAccount.debit(transaction.amount);
     toAccount.credit(transaction.amount);
   }
