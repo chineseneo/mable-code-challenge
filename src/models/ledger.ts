@@ -42,10 +42,6 @@ export default class Ledger {
     toAccount.credit(transaction.amount);
   }
 
-  getAccounts(): Account[] {
-    return this.accounts;
-  }
-
   findAccountByNumber(accountNumber: string): Account | undefined {
     return this.accounts.find(account => account.hasSameAccountNumber(accountNumber));
   }

@@ -72,9 +72,7 @@ describe('Ledger', () => {
       { from: 'B', to: 'A', amount: 30 }    // B -> A: B now has $20, A has $30
     ]);
 
-    expect(ledger.getAccounts()[0].getBalance()).toBe(30);  // A
-    expect(ledger.getAccounts()[1].getBalance()).toBe(20);  // B
-    expect(ledger.getAccounts()[2].getBalance()).toBe(50);  // C
+    expect(ledger.toString()).toBe('A,30.00\nB,20.00\nC,50.00');
 
     // If processed in different order, this would fail
     // e.g., if transaction 2 ran before transaction 1, B wouldn't have funds
