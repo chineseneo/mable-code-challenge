@@ -15,12 +15,12 @@ describe('Ledger', () => {
     expect(ledger.accounts).toHaveLength(1);
   });
 
-  it('should process a transaction', () => {
+  it('should process one transaction', () => {
     const ledger = new Ledger([
       new Account(accountNumber1, initialBalance1),
       new Account(accountNumber2, initialBalance2)
     ]);
-    ledger.processTransaction({ from: accountNumber1, to: accountNumber2, amount: transferAmount });
+    ledger.processTransactions([{ from: accountNumber1, to: accountNumber2, amount: transferAmount }]);
     expect(ledger.accounts[0].getBalance()).toBe(initialBalance1 - transferAmount);
     expect(ledger.accounts[1].getBalance()).toBe(initialBalance2 + transferAmount);
   });
@@ -28,14 +28,14 @@ describe('Ledger', () => {
   it('should not process a transaction if the from account is not found', () => {
     const ledger = new Ledger([new Account(accountNumber1, initialBalance1)]);
     expect(() =>
-      ledger.processTransaction({ from: accountNumber2, to: accountNumber1, amount: transferAmount })
+      ledger.processTransactions([{ from: accountNumber2, to: accountNumber1, amount: transferAmount }])
     ).toThrow(ledgerAccountNotFoundError);
   });
 
   it('should not process a transaction if the to account is not found', () => {
     const ledger = new Ledger([new Account(accountNumber1, initialBalance1)]);
     expect(() =>
-      ledger.processTransaction({ from: accountNumber1, to: accountNumber2, amount: transferAmount })
+      ledger.processTransactions([{ from: accountNumber1, to: accountNumber2, amount: transferAmount }])
     ).toThrow(ledgerAccountNotFoundError);
   });
 

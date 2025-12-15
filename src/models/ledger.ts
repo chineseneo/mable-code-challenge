@@ -10,7 +10,7 @@ export default class Ledger {
     }
   }
   
-  processTransaction(transaction: Transaction): void {
+  private processTransaction(transaction: Transaction): void {
     const fromAccount = this.findAccountByNumber(transaction.from);
     const toAccount = this.findAccountByNumber(transaction.to);
     if (!fromAccount || !toAccount) {
