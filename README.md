@@ -32,6 +32,8 @@ Clean separation: CSV loading → Domain models → Business logic → Output
 
 **Sequential processing**: Transactions processed in order since earlier transactions affect later ones (e.g., depleting funds).
 
+**Simple CSV parsing**: Uses native string split instead of a library. The provided CSVs are well-formed (no quotes, commas in values), so a custom parser is simpler and has zero dependencies. Production code with untrusted CSVs would use a robust parser like `csv-parse`.
+
 ## Assumptions
 
 - CSV files are well-formed
