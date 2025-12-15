@@ -26,7 +26,7 @@ Clean separation: CSV loading → Domain models → Business logic → Output
 
 ## Design Decisions
 
-**Fail-fast processing**: Stops on first transaction error. Banking systems should be conservative - a failure indicates data issues and partial processing is risky.
+**Fail-fast processing**: Stops on first transaction error. Banking systems should be conservative - a failure indicates data issues and should not continue as this will break the order of transactions.
 
 **Money as integer cents**: Stored internally as cents to avoid floating-point precision errors, exposed as dollars at boundaries.
 
