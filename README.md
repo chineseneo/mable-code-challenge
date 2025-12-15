@@ -34,6 +34,8 @@ Clean separation: CSV loading → Domain models → Business logic → Output
 
 **Simple CSV parsing**: Uses native string split instead of a library. The provided CSVs are well-formed (no quotes, commas in values), so a custom parser is simpler and has zero dependencies. Production code with untrusted CSVs would use a robust parser like `csv-parse`.
 
+**Console logging for observability**: Basic logging with console.log/error for transaction processing, balance changes, and errors. Provides visibility during development and debugging. Production would use a proper logging framework (Winston, Pino) with log levels and structured output.
+
 ## Assumptions
 
 - CSV files are well-formed
