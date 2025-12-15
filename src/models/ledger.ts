@@ -6,7 +6,20 @@ export default class Ledger {
 
   processTransactions(transactions: Transaction[]): void {
     for (const transaction of transactions) {
-      this.processTransaction(transaction);
+      try {
+        console.log(
+          `[INFO] Processing transaction: from=${transaction.from}, to=${transaction.to}, amount=${transaction.amount}`
+        );
+        this.processTransaction(transaction);
+        console.log(
+          `[SUCCESS] Transaction processed: from=${transaction.from}, to=${transaction.to}, amount=${transaction.amount}`
+        );
+      } catch (error: any) {
+        console.error(
+          `[ERROR] Failed to process transaction: from=${transaction.from}, to=${transaction.to}, amount=${transaction.amount} :: ${error.message}`
+        );
+        throw error; // Maintain fail-fast behaviour
+      }
     }
   }
   
@@ -14,9 +27,15 @@ export default class Ledger {
     const fromAccount = this.findAccountByNumber(transaction.from);
     const toAccount = this.findAccountByNumber(transaction.to);
     if (!fromAccount || !toAccount) {
+      console.error(
+        `[ERROR] One or both accounts not found: from=${transaction.from}, to=${transaction.to}`
+      );
       throw new Error('Account not found');
     }
     if (fromAccount === toAccount) {
+      console.error(
+        `[ERROR] Attempted transfer to self: account=${transaction.from}`
+      );
       throw new Error('From and to accounts cannot be the same');
     }
     fromAccount.debit(transaction.amount);

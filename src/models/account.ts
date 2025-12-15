@@ -10,15 +10,18 @@ export default class Account {
     const amountInCents = amount * this.CENTS_PER_DOLLAR;
     this.validateAmount(amountInCents);
     if (this.balanceInCents - amountInCents < 0) {
+      console.error(`[ERROR] Insufficient funds: account=${this.accountNumber}, attemptedDebit=$${amount.toFixed(2)}, currentBalance=$${(this.getBalance()).toFixed(2)}`);
       throw new Error('Insufficient funds');
     }
     this.balanceInCents -= amountInCents;
+    console.log(`[INFO] Debited $${amount.toFixed(2)} from account ${this.accountNumber}. New balance: $${this.getBalance().toFixed(2)}`);
   }
 
   credit(amount: number): void {
     const amountInCents = amount * this.CENTS_PER_DOLLAR;
     this.validateAmount(amountInCents);
     this.balanceInCents += amountInCents;
+    console.log(`[INFO] Credited $${amount.toFixed(2)} to account ${this.accountNumber}. New balance: $${this.getBalance().toFixed(2)}`);
   }
 
   getBalance(): number {
@@ -26,7 +29,7 @@ export default class Account {
   }
 
   toString(): string {
-    return `${this.accountNumber},${this.getBalance()}`;
+    return `${this.accountNumber},${this.getBalance().toFixed(2)}`;
   }
 
   hasSameAccountNumber(accountNumber: string): boolean {
@@ -35,6 +38,7 @@ export default class Account {
 
   private validateAmount(amount: number): void {
     if (amount <= 0) {
+      console.error(`[ERROR] Invalid amount: account=${this.accountNumber}, amountInCents=${amount}`);
       throw new Error('Amount must be greater than 0');
     }
   }
