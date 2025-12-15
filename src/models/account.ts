@@ -18,6 +18,10 @@ export default class Account {
     return this.balance;
   }
 
+  toString(): string {
+    return `${this.accountNumber},${this.balance}`;
+  }
+
   private validateAmount(amount: number): void {
     if (amount <= 0) {
       throw new Error('Amount must be greater than 0');

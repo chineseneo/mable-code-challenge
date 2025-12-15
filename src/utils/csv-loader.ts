@@ -19,6 +19,9 @@ const readCsv = (filePath: string): string[] => {
   const file = fs.openSync(filePath, "r");
   try {
     const csv = fs.readFileSync(file, "utf8");
+    if (!csv.includes("\n")) {
+      throw new Error(`File ${filePath} is not a CSV`);
+    }
     return csv.split("\n").filter((row) => row.length > 0);
   } catch (error) {
     throw new Error(`Error reading CSV file ${filePath}: ${error}`);
